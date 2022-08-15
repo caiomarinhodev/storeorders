@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load form_utils %}
+{% block content %}
+    <h3 class="page-header">Add Order</h3>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label>Client_name:</label>
+                                {{ form.client_name }}
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label>Status:</label>
+                                <input name="status" class="form-control" id="status"/>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label>Total_value:</label>
+                                {{ form.total_value }}
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label>Notes:</label>
+                                {{ form.notes }}
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="panel-footer">
+                        <div id="actions" class="row">
+                            <div class="col-md-12">
+                                <button id="btn_salvar" class="btn btn-primary" type="submit">
+                                    Add Order
+                                </button>
+                                <a href="{% url 'ORDER_list' %}" class="btn btn-default">Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#order_link').addClass('active');
+
+        });
+    </script>
+{% endblock %}

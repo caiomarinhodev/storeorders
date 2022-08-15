@@ -1,0 +1,31 @@
+{% extends 'base_login.html' %}
+{% load static %}
+{% load form_utils %}
+{% block content %}
+    <div class="container">
+        <div class="col-sm-offset-2 col-sm-8">
+
+            <h3 class="page-header">Login Page</h3>
+
+            <form action="" method="post">{% csrf_token %}
+                <div class="form-group has-feedback">
+                    {{ form.as_p }}
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Enter</button>
+                    </div>
+                    <div class="col-xs-6">
+                        <a href="{% url 'register' %}" class="btn btn-default btn-block btn-flat">Register</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('input').addClass('form-control');
+        });
+    </script>
+
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load form_utils %}
+{% block content %}
+    <h3 class="page-header">View Order</h3>
+
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="form-group">
+                <label>Client_name:</label>
+
+                {{ order.nome_cliente }}
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="form-group">
+                <label>ID:</label>
+
+                {{ order.id }}
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="form-group">
+                <label>Status:</label>
+
+                {{ order.id_status }}
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="form-group">
+                <label>Total_value:</label>
+
+                {{ order.valor_total }}
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="form-group">
+                <label>Notes:</label>
+
+                {{ order.observacao }}
+            </div>
+        </div>
+
+    </div>
+    <hr/>
+    <div id="actions" class="row">
+        <div class="col-md-12">
+            <a class="btn btn-primary" href="{% url 'ORDER_update' order.id %}">
+                Edit
+            </a>
+            <a href="{% url 'ORDER_list' %}" class="btn btn-default">Back</a>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#order_link').addClass('active');
+        });
+    </script>
+{% endblock %}

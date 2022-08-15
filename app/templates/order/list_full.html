@@ -1,0 +1,104 @@
+﻿{% extends 'base.html' %}
+{% load my_tags %}
+{% load static %}
+{% load form_utils %}
+{% block content %}
+    <div id="top" class="row">
+        <div class="col-sm-3">
+            <h2> {{ model_name_plural }}</h2>
+        </div>
+        <div class="col-sm-3 col-sm-offset-6">
+            <a href="{% url 'ORDER_create' %}" class="btn btn-primary pull-right h2"><i
+                    class="fa fa-plus"></i> Add Order
+            </a>
+        </div>
+    </div> <!-- /#top -->
+    <hr/>
+    <div id="list" class="row">
+        <div class="col-md-12">
+            <table id="table" class="table table-striped" cellspacing="0" cellpadding="0">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>CLIENT_NAME</th>
+                    <th>STATUS</th>
+                    <th>TOTAL_VALUE</th>
+                    <th>NOTE</th>
+
+                    <th class="actions">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for order in object_list %}
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.nome_cliente }}</td>
+                        <td>{{ order.id_status }}</td>
+                        <td>{{ order.valor_total }}</td>
+                        <td>{{ order.observacao }}</td>
+                        <td><a href="{% url 'ORDER_detail' order.id %}"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;<a
+                                href="{% url 'ORDER_delete' order.id %}"><i class="fa fa-close"></i></a></td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div> <!-- /#list -->
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#order_link').addClass('active');
+
+            $('#clear').click(function () {
+                $("form")[0].reset();
+                $('input,select,textarea').val('');
+                $("form").submit();
+            });
+
+            function generate_icon(element, text, column) {
+                if (text.includes('-')) {
+                    $(element).empty();
+                    $(element).append(
+                        column.toUpperCase() + '<i class="fa fa-angle-up"></i>'
+                    );
+                } else {
+                    $(element).empty();
+                    $(element).append(
+                        column.toUpperCase() + '<i class="fa fa-angle-down"></i>'
+                    );
+                }
+            }
+
+            var column_ordering = '{{ ordering }}';
+            var previous_column = '{{ ordering }}'.replace('-', '');
+
+            function initialize_ordering() {
+                var elem = $('th:contains("' + previous_column.toUpperCase() + '")');
+                generate_icon(elem, column_ordering, previous_column);
+            }
+
+            initialize_ordering();
+
+            $('th').click(function () {
+                var text = $(this).text();
+                //console.log('text', text);
+                if (text !== 'Actions') {
+                    var column = text.toLowerCase();
+                    //console.log(column_ordering === column);
+                    if (column_ordering === column) {
+                        column_ordering = '-' + column
+                    } else {
+                        column_ordering = column
+                    }
+                    //console.log(column_ordering);
+                    $('[name="ordering"]').val(column_ordering.trim());
+                    $("form").submit();
+                }
+            });
+
+        });
+    </script>
+
+{% endblock %}
